@@ -1,8 +1,15 @@
 package main
 
-import server "github.com/MigAru/Api-loud-storage/app"
+import (
+	"fmt"
+	"net/http"
+
+	server "github.com/MigAru/Api-loud-storage/app"
+)
 
 func main() {
 	app := server.App{}
-	app.Init()
+	middlewares := []func(http.Handler) http.Handler{}
+	app.Init(middlewares)
+	fmt.Println(len(middlewares))
 }
