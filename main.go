@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	server "github.com/MigAru/Api-loud-storage/app"
+	server "github.com/MigAru/Api-cloud-storage/app"
 )
 
 func main() {

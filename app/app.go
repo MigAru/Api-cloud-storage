@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	structs "github.com/MigAru/Api-loud-storage/structs"
+	structs "github.com/MigAru/Api-cloud-storage/structs"
 )
 
 
