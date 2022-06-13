@@ -13,5 +13,5 @@ func main() {
 	middlewares := []func(http.Handler) http.Handler{middlewares.Logger,}
 	App.Init(middlewares)
 	App.RegisterRouterApi(&route.Pingrouter)
-	App.Run(":8080")
+	App.Run("8080")
 }

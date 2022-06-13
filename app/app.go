@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log"
 	"net/http"
 
 	structs "github.com/MigAru/Api-cloud-storage/structs"
@@ -18,7 +19,9 @@ func (a *App) Init(middlewares []func(http.Handler) http.Handler) {
 }
 
 func (a *App) Run(port string) {
-	http.ListenAndServe(port, a.Mux)
+	log.Printf("%s %s\n", "Server starting on port:", port)
+	http.ListenAndServe(":"+port, a.Mux)
+	
 }
 
 func (a *App) AddEndpoint(pattern string, handler func(http.ResponseWriter, *http.Request)){
