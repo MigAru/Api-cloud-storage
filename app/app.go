@@ -8,25 +8,31 @@ import (
 
 
 type App struct {
-	mux *http.ServeMux
-	middlewares []func(http.Handler) http.Handler
+	Mux *http.ServeMux
+	Middlewares []func(http.Handler) http.Handler
 }
 
 func (a *App) Init(middlewares []func(http.Handler) http.Handler) {
-	a.mux = http.NewServeMux()
+	a.Mux = http.NewServeMux()
+	a.Middlewares = middlewares
 }
 
 func (a *App) Run(port string) {
-	http.ListenAndServe(port, a.mux)
+	http.ListenAndServe(port, a.Mux)
 }
+
+func (a *App) AddEndpoint(pattern string, handler func(http.ResponseWriter, *http.Request)){
+	a.Mux.HandleFunc(pattern, handler)
+}
+
 func (a *App) RegisterRouterApi(router *structs.Router) {
 	for _, endpoint := range router.Endpoints {
 		handler := endpoint.Handler
-		if len(a.middlewares) > 0{
-			for _, middleware := range a.middlewares{
+		if len(a.Middlewares) > 0{
+			for _, middleware := range a.Middlewares{
 				handler = middleware(handler)
 			}
 		}
-		a.mux.Handle("/api"+router.Version+router.Name+endpoint.Prefix, handler)
+		a.Mux.Handle("/api"+router.Version+router.Name+endpoint.Prefix, handler)
 	}
 }
